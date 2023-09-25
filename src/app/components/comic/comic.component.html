@@ -1,0 +1,391 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Truyện tranh</h5>
+        </div>
+        <div class="card-body">
+          <div class="btn-popup pull-right">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-original-title="test"
+              data-target="#exampleModal"
+              (click)="open(content)"
+            >
+              Thêm mới
+            </button>
+            <ng-template #content let-modal>
+              <form
+                class="needs-validation"
+                [formGroup]="comicForm"
+                enctype="multipart/form-data"
+              >
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Thêm mới truyện tranh
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <div class="form-group">
+                      <label for="title" class="mb-1">Tên truyện tranh :</label>
+                      <input
+                        class="form-control"
+                        id="title"
+                        name="title"
+                        type="text"
+                        formControlName="title"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="slug" class="mb-1">Slug :</label>
+                      <input
+                        class="form-control"
+                        id="slug"
+                        type="text"
+                        formControlName="slug"
+                        readonly
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="genre" class="col-form-label">Thể loại</label>
+                      <div>
+                        <ng-multiselect-dropdown
+                          [settings]="settings"
+                          [data]="genres"
+                          [placeholder]="'Chọn thể loại'"
+                          id="genre"
+                          name="genre"
+                          formControlName="genreIds"
+                        >
+                        </ng-multiselect-dropdown>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <label for="formFile" class="mb-1">Hình ảnh:</label>
+                      <div
+                        class="form-group mb-0 col-md-8 d-flex align-items-center"
+                      >
+                        <input
+                          class="form-control"
+                          id="formFile"
+                          type="file"
+                          (change)="onFileSelected($event)"
+                          #fileInput
+                        />
+                      </div>
+
+                      <div class="form-group mb-0 mt-2 col-md-4">
+                        <img
+                          [src]="selectedImageUrl || defaultImageUrl"
+                          width="130px"
+                          alt="Cover Image"
+                          class="img-thumbnail"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="description" class="col-form-label mb-1"
+                        >Tóm tắt</label
+                      >
+                      <textarea
+                        rows="5"
+                        class="form-control"
+                        cols="12"
+                        type="text"
+                        id="description"
+                        formControlName="description"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="addComic()"
+                  >
+                    Thêm
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+            <ng-template #contentEdit let-modal>
+              <form
+                class="needs-validation"
+                [formGroup]="comicForm"
+                enctype="multipart/form-data"
+              >
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Cập nhật truyện tranh
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <div class="form-group">
+                      <label for="title" class="mb-1">Tên truyện tranh :</label>
+                      <input
+                        class="form-control"
+                        id="title"
+                        name="title"
+                        type="text"
+                        formControlName="title"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="slug" class="mb-1">Slug :</label>
+                      <input
+                        class="form-control"
+                        id="slug"
+                        type="text"
+                        formControlName="slug"
+                        readonly
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="genre" class="col-form-label">Thể loại</label>
+                      <div>
+                        <ng-multiselect-dropdown
+                          [settings]="settings"
+                          [data]="genres"
+                          [placeholder]="'Chọn thể loại'"
+                          id="genre"
+                          name="genre"
+                          formControlName="genreIds"
+                        >
+                        </ng-multiselect-dropdown>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label">Trạng thái</label>
+                      <select
+                        class="custom-select form-select"
+                        required=""
+                        formControlName="status"
+                      >
+                        <option value="0">Hoàn thành</option>
+                        <option value="1">Đang tiến hành</option>
+                      </select>
+                    </div>
+                    <div class="row">
+                      <label for="formFile" class="mb-1">Hình ảnh:</label>
+                      <div
+                        class="form-group mb-0 col-md-8 d-flex align-items-center"
+                      >
+                        <input
+                          class="form-control"
+                          id="formFile"
+                          type="file"
+                          (change)="onFileSelected($event)"
+                          #fileInput
+                        />
+                        <input
+                          class="form-control"
+                          id="formFile"
+                          type="text"
+                          hidden
+                          formControlName="coverImage"
+                        />
+                      </div>
+
+                      <div class="form-group mb-0 mt-2 col-md-4">
+                        <img
+                          [src]="selectedImageUrl || defaultImageUrl"
+                          width="130px"
+                          alt="Ảnh bìa"
+                          class="img-thumbnail"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="description" class="col-form-label mb-1"
+                        >Tóm tắt</label
+                      >
+                      <textarea
+                        rows="5"
+                        class="form-control"
+                        cols="12"
+                        type="text"
+                        id="description"
+                        formControlName="description"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="updateComic()"
+                  >
+                    Cập nhật
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+            <ng-template #contentDelete let-modal>
+              <form class="needs-validation">
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Xóa truyện tranh
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <h4 class="modal-title f-w-600">
+                      Xác nhận xóa truyện tranh?
+                    </h4>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="deleteComic()"
+                  >
+                    Xóa
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+          </div>
+          <div id="batchDelete" class="category-table custom-datatable">
+            <form>
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="filter-ngx form-control"
+                  placeholder="Search..."
+                  autocomplete="off"
+                />
+              </div>
+            </form>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Tên truyện</th>
+                    <th scope="col">Slug</th>
+                    <th scope="col">Ảnh</th>
+                    <!-- <th scope="col">Mô tả</th> -->
+                    <th scope="col">Thể loại</th>
+                    <th scope="col">Chương</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let comic of comicList">
+                    <!-- <th scope="row">{{ comic.comic_id }}</th> -->
+                    <td>{{ comic.title }}</td>
+                    <td>{{ comic.slug }}</td>
+                    <td>
+                      <img src="{{ comic.coverImage }}" width="50px" alt="" />
+                    </td>
+                    <!-- <td>{{ comic.description }}</td> -->
+                    <td>
+                      <div *ngFor="let genre of comic.comicGenres">
+                        {{ genre.genre.genre_Name }}
+                      </div>
+                    </td>
+                    <td>
+                      <a [routerLink]="['/chapter', comic.comic_id]">
+                        <i class="fas fa-th-list"></i
+                      ></a>
+                    </td>
+                    <td>
+                      {{ comic.status === 0 ? "Hoàn thành" : "Đang tiến hành" }}
+                    </td>
+                    <td>
+                      <a
+                        data-toggle="modal"
+                        data-original-title="test"
+                        data-target="#exampleModal"
+                      >
+                        <i
+                          class="fa fa-edit f-12"
+                          (click)="
+                            open(contentEdit); onSelectComic(comic.comic_id)
+                          "
+                        ></i></a
+                      >&nbsp;
+                      <a
+                        (click)="
+                          open(contentDelete); onSelectComic(comic.comic_id)
+                        "
+                        ><i class="fa fa-trash-o"></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="d-flex justify-content-center p-2">
+                <!-- <ngb-pagination
+                    [collectionSize]="(total$ | async)!"
+                    [(page)]="service.page"
+                    [pageSize]="service.pageSize"
+                  >
+                  </ngb-pagination> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

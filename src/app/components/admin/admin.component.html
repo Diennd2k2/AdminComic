@@ -1,0 +1,284 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Admin</h5>
+        </div>
+        <div class="card-body">
+          <div class="btn-popup pull-right">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-original-title="test"
+              data-target="#exampleModal"
+              (click)="open(content)"
+            >
+              Thêm mới
+            </button>
+            <ng-template #content let-modal>
+              <form class="needs-validation" [formGroup]="adminForm">
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Thêm mới admin
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <div class="form-group">
+                      <label for="fullName" class="mb-1">Họ và tên :</label>
+                      <input
+                        class="form-control"
+                        id="fullName"
+                        type="text"
+                        formControlName="fullName"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="email" class="mb-1">Email :</label>
+                      <input
+                        class="form-control"
+                        id="email"
+                        type="email"
+                        formControlName="email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="password" class="mb-1">Mật khẩu :</label>
+                      <input
+                        class="form-control"
+                        id="password"
+                        type="password"
+                        formControlName="password"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="addAdmin()"
+                  >
+                    Thêm
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+
+            <ng-template #contentEdit let-modal>
+              <form
+                class="needs-validation"
+                [formGroup]="adminForm"
+                (ngSubmit)="updateAdmin()"
+              >
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Cập nhật admin
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <div class="form-group">
+                      <label for="fullName" class="mb-1">Họ và tên :</label>
+                      <input
+                        class="form-control"
+                        id="fullName"
+                        type="text"
+                        formControlName="fullName"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="email" class="mb-1">Email :</label>
+                      <input
+                        class="form-control"
+                        id="email"
+                        type="email"
+                        formControlName="email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="password" class="mb-1">Mật khẩu :</label>
+                      <input
+                        class="form-control"
+                        id="password"
+                        type="password"
+                        formControlName="password"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label">Vai trò</label>
+                      <select
+                        class="custom-select form-select"
+                        required=""
+                        formControlName="role"
+                      >
+                        <option value="admin">Admin</option>
+                        <option value="user">Người dùng</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" type="submit">
+                    Cập nhật
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+
+            <ng-template #contentDelete let-modal>
+              <form class="needs-validation">
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Admin
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <h4 class="modal-title f-w-600">Xác nhận xóa admin?</h4>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="deleteAdmin()"
+                  >
+                    Xóa
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+          </div>
+          <div id="batchDelete" class="category-table custom-datatable">
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control w-50"
+                placeholder="Tìm kiếm..."
+                autocomplete="off"
+              />
+            </div>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Họ và tên</th>
+                    <th scope="col">Email</th>
+                    <!-- <th scope="col">Mật khẩu</th> -->
+                    <th scope="col">Role</th>
+                    <th scope="col">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let item of adminList
+                        | paginate
+                          : {
+                              itemsPerPage: tableSize,
+                              currentPage: page,
+                              totalItems: count
+                            };
+                      let i = index
+                    "
+                  >
+                    <th scope="row">{{ item.admin_id }}</th>
+                    <td>{{ item.fullName }}</td>
+                    <td>{{ item.email }}</td>
+                    <!-- <td>{{ item.password }}</td> -->
+                    <td>{{ item.role }}</td>
+                    <td>
+                      <a
+                        data-toggle="modal"
+                        data-original-title="test"
+                        data-target="#exampleModal"
+                        (click)="
+                          open(contentEdit); onSelectAdmin(item.admin_id)
+                        "
+                      >
+                        <i class="fa fa-edit f-12"></i></a
+                      >&nbsp;
+                      <a
+                        (click)="
+                          open(contentDelete); onSelectAdmin(item.admin_id)
+                        "
+                        ><i class="fa fa-trash-o"></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="d-flex justify-content-center p-2">
+                <!-- <ngb-pagination
+                    [collectionSize]="(total$ | async)!"
+                    [(page)]="service.page"
+                    [pageSize]="service.pageSize"
+                  >
+                  </ngb-pagination> -->
+                <pagination-controls
+                  previousLabel=""
+                  nextLabel=""
+                  (pageChange)="onTableDataChange($event)"
+                ></pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

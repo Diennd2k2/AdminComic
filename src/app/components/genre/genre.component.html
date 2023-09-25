@@ -1,0 +1,286 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Thể loại</h5>
+        </div>
+        <div class="card-body">
+          <div class="btn-popup pull-right">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-original-title="test"
+              data-target="#exampleModal"
+              (click)="open(content)"
+            >
+              Thêm mới
+            </button>
+            <ng-template #content let-modal>
+              <form class="needs-validation" [formGroup]="genreForm">
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Thêm mới thể loại
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <div class="form-group">
+                      <label for="genre_Name" class="mb-1">Thể loại :</label>
+                      <input
+                        class="form-control"
+                        id="genre_Name"
+                        type="text"
+                        formControlName="genre_Name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="slug" class="mb-1">Slug :</label>
+                      <input
+                        class="form-control"
+                        id="slug"
+                        type="text"
+                        formControlName="slug"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="addGenre()"
+                  >
+                    Thêm
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+
+            <ng-template #contentEdit let-modal>
+              <form
+                class="needs-validation"
+                [formGroup]="genreForm"
+                (ngSubmit)="updateGenre()"
+              >
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Cập nhật thể loại
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <div class="form-group">
+                      <label for="genre_Name" class="mb-1">Thể loại :</label>
+                      <input
+                        class="form-control"
+                        id="genre_Name"
+                        type="text"
+                        formControlName="genre_Name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="slug" class="mb-1">Slug :</label>
+                      <input
+                        class="form-control"
+                        id="slug"
+                        type="text"
+                        formControlName="slug"
+                        readonly
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label">Status</label>
+                      <div
+                        class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated"
+                      >
+                        <label class="d-block" for="edo-ani">
+                          <input
+                            class="radio_animated"
+                            id="edo-ani"
+                            type="radio"
+                            name="status"
+                            formControlName="status"
+                            [value]="0"
+                            [checked]="genreForm.get('status').value === 0"
+                          />
+                          Ẩn
+                        </label>
+                        <label class="d-block" for="edo-ani">
+                          <input
+                            class="radio_animated"
+                            id="edo-ani"
+                            type="radio"
+                            name="status"
+                            formControlName="status"
+                            [value]="1"
+                            [checked]="genreForm.get('status').value === 1"
+                          />
+                          Hiện
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" type="submit">
+                    Cập nhật
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+
+            <ng-template #contentDelete let-modal>
+              <form class="needs-validation">
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Thể loại
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <h4 class="modal-title f-w-600">Xác nhận xóa thể loại?</h4>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="deleteGenre()"
+                  >
+                    Xóa
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+          </div>
+          <div id="batchDelete" class="category-table custom-datatable">
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control w-50"
+                placeholder="Tìm kiếm..."
+                autocomplete="off"
+              />
+            </div>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Thể loại</th>
+                    <th scope="col">Slug</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let genre of genreList
+                        | paginate
+                          : {
+                              itemsPerPage: tableSize,
+                              currentPage: page,
+                              totalItems: count
+                            };
+                      let i = index
+                    "
+                  >
+                    <th scope="row">{{ genre.genre_id }}</th>
+                    <td>{{ genre.genre_Name }}</td>
+                    <td>{{ genre.slug }}</td>
+                    <td>{{ genre.status === 0 ? "Ẩn" : "Hiện" }}</td>
+                    <td>
+                      <a
+                        data-toggle="modal"
+                        data-original-title="test"
+                        data-target="#exampleModal"
+                        (click)="
+                          open(contentEdit); onSelectGenre(genre.genre_id)
+                        "
+                      >
+                        <i class="fa fa-edit f-12"></i></a
+                      >&nbsp;
+                      <a
+                        (click)="
+                          open(contentDelete); onSelectGenre(genre.genre_id)
+                        "
+                        ><i class="fa fa-trash-o"></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="d-flex justify-content-center p-2">
+                <!-- <ngb-pagination
+                  [collectionSize]="(total$ | async)!"
+                  [(page)]="service.page"
+                  [pageSize]="service.pageSize"
+                >
+                </ngb-pagination> -->
+                <pagination-controls
+                  previousLabel=""
+                  nextLabel=""
+                  (pageChange)="onTableDataChange($event)"
+                ></pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

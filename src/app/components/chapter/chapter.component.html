@@ -1,0 +1,307 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Chương truyện</h5>
+        </div>
+        <div class="card-body">
+          <div class="btn-popup pull-right">
+            <button
+              type="button"
+              class="btn btn-primary m-2"
+              data-toggle="modal"
+              data-original-title="test"
+              data-target="#exampleModal"
+              (click)="open(content)"
+            >
+              Thêm mới
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="goBack()">
+              Quay lại
+            </button>
+            <ng-template #content let-modal>
+              <form class="needs-validation" [formGroup]="chapterForm">
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Thêm mới chương truyện
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <div class="form-group">
+                      <label for="title" class="mb-1">Tên chương :</label>
+                      <input
+                        class="form-control"
+                        id="title"
+                        type="text"
+                        formControlName="title"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="slug" class="mb-1">Slug :</label>
+                      <input
+                        class="form-control"
+                        id="slug"
+                        type="text"
+                        formControlName="slug"
+                        readonly
+                      />
+                    </div>
+                    <!-- <div class="form-group">
+                      <label for="arrange" class="mb-1">Thứ tự :</label>
+                      <input
+                        class="form-control"
+                        id="arrange"
+                        type="number"
+                        formControlName="arrange"
+                        [value]="calculateNewArrange()"
+                      />
+                    </div> -->
+                    <div class="form-group">
+                      <label for="imageUrls" class="col-form-label mb-1"
+                        >Hình ảnh</label
+                      >
+                      <textarea
+                        id="imageUrls"
+                        rows="5"
+                        class="form-control"
+                        cols="12"
+                        formControlName="imageUrls"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    id="upload_widget"
+                    class="btn btn-warning"
+                    (click)="openWidget()"
+                  >
+                    Tải ảnh lên
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="addChapter()"
+                  >
+                    Thêm
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+
+            <ng-template #contentEdit let-modal>
+              <form class="needs-validation" [formGroup]="chapterForm">
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Cập nhật chương truyện
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <div class="form-group">
+                      <label for="title" class="mb-1">Tên chương :</label>
+                      <input
+                        class="form-control"
+                        id="title"
+                        type="text"
+                        formControlName="title"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="slug" class="mb-1">Slug :</label>
+                      <input
+                        class="form-control"
+                        id="slug"
+                        type="text"
+                        formControlName="slug"
+                        readonly
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="arrange" class="mb-1">Thứ tự :</label>
+                      <input
+                        class="form-control"
+                        id="arrange"
+                        type="number"
+                        formControlName="arrange"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="imgUrl" class="col-form-label mb-1"
+                        >Hình ảnh</label
+                      >
+                      <textarea
+                        id="imgUrl"
+                        rows="5"
+                        class="form-control"
+                        cols="12"
+                        formControlName="imageUrls"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    id="upload_widget"
+                    class="btn btn-warning"
+                    (click)="openWidget()"
+                  >
+                    Tải ảnh lên
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="updateChapter()"
+                  >
+                    Cập nhật
+                  </button>
+                  <button
+                    class="btn social-btn btn-google"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+
+            <ng-template #contentDelete let-modal>
+              <form class="needs-validation">
+                <div class="modal-header">
+                  <h5 class="modal-title f-w-600" id="exampleModalLabel">
+                    Xóa chương truyện
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form">
+                    <h4 class="modal-title f-w-600">
+                      Xác nhận xóa chương truyện?
+                    </h4>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="deleteChapter()"
+                  >
+                    Xóa
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"
+                  >
+                    Thoát
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+          </div>
+          <div id="batchDelete" class="category-table custom-datatable">
+            <form>
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="filter-ngx form-control"
+                  placeholder="Search..."
+                  autocomplete="off"
+                />
+              </div>
+            </form>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên chương</th>
+                    <th scope="col">Slug</th>
+                    <th scope="col">Thứ tự</th>
+                    <th scope="col">Lượt xem</th>
+                    <th scope="col">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of chapterList">
+                    <th scope="row">{{ item.chapter_id }}</th>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.slug }}</td>
+                    <td>{{ item.arrange }}</td>
+                    <td>{{ item.views }}</td>
+                    <td>
+                      <a
+                        data-toggle="modal"
+                        data-original-title="test"
+                        data-target="#exampleModal"
+                        (click)="
+                          open(contentEdit); onSelectChapter(item.chapter_id)
+                        "
+                      >
+                        <i class="fa fa-edit f-12"></i></a
+                      >&nbsp;
+                      <a
+                        (click)="
+                          open(contentDelete); onSelectChapter(item.chapter_id)
+                        "
+                        ><i class="fa fa-trash-o"></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="d-flex justify-content-center p-2">
+                <!-- <ngb-pagination
+                    [collectionSize]="(total$ | async)!"
+                    [(page)]="service.page"
+                    [pageSize]="service.pageSize"
+                  >
+                  </ngb-pagination> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
